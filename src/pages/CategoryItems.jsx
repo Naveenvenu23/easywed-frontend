@@ -10,7 +10,7 @@ const CategoryItems = () => {
 
   useEffect(() => {
     
-    axios.get(`http://localhost:3000/items/${category}`)
+    axios.get(`https://easywed-backend.onrender.com/items/${category}`)
       .then(res => {
         setItems(res.data);
         setLoading(false);
