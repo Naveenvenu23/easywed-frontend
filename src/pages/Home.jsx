@@ -40,7 +40,7 @@ const Home = () => {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:3000/send", form);
+      await axios.post("https://easywed-backend.onrender.com/send", form);
       alert("Message sent successfully!");
     } catch (err) {
       alert("Failed to send message.");
@@ -62,7 +62,7 @@ const Home = () => {
   }
 
   useEffect(() => {
-    axios.get("http://localhost:3000/categories")
+    axios.get("https://easywed-backend.onrender.com/categories")
       .then(res => console.log(res.data))
       .catch(err => console.log(err));
   }, []);
