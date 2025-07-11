@@ -8,6 +8,7 @@ import { FaArrowRight } from "react-icons/fa";
 
 const Home = () => {
   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
 
 
@@ -61,13 +62,20 @@ const Home = () => {
     }
   }
 
-  useEffect(() => {
-    axios.get("https://easywed-backend.onrender.com/categories")
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err));
+useEffect(() => {
+    axios.get("http://localhost:3000/categories")
+      .then((res) => {
+        console.log("Fetched categories:", res.data);
+        setCategories(res.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching categories:", err);
+      });
   }, []);
 
-  return (
+
+
+  return (  
     <>
 
       <section>
@@ -213,105 +221,111 @@ absolute top-36 left-11 z-10
 
 
       <section className='mt-36 px-4 sm:px-6 lg:px-10'>
-        <div className="text-center">
-          <p className="text-3xl sm:text-4xl courgette-text">Shop Our Latest Styles</p>
-          <p className="mt-3 sm:mt-5 text-pink-700 font-semibold text-lg sm:text-xl">C A T E G O R I E S</p>
-          <img src='./images/underline.webp' className='mx-auto w-32 sm:w-40' alt="underline" />
+  <div className="text-center">
+    <p className="text-3xl sm:text-4xl courgette-text">Shop Our Latest Styles</p>
+    <p className="mt-3 sm:mt-5 text-pink-700 font-semibold text-lg sm:text-xl">C A T E G O R I E S</p>
+    <img src='./images/underline.webp' className='mx-auto w-32 sm:w-40' alt="underline" />
+  </div>
+
+  <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 mt-10 text-center'>
+
+
+    <Link to="/category/Venue">
+      <div className="flex flex-col items-center hover:scale-105 transition">
+        <div className="relative w-full max-w-xs">
+          <img src="./images/cat (1).jpg" className="w-full h-64 object-cover rounded-md shadow-lg" alt="Venue" />
+          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-2xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
+            Venue
+          </p>
         </div>
+      </div>
+    </Link>
 
-        <div id='category' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 mt-10 text-center'>
 
-          <Link to="/category/Venue">
-            <div className="flex flex-col items-center cursor-pointer transition-transform duration-300 hover:scale-105">
-              <div className="relative w-full max-w-xs">
-                <img src="./images/cat (1).jpg" className="w-full h-64 sm:h-72 object-cover rounded-md shadow-lg" alt="Venue" />
-                <p className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-2xl sm:text-3xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
-                  Venue
-                </p>
-              </div>
-            </div>
-          </Link>
-
-          <Link to="/category/Dress">
-            <div className="flex flex-col items-center cursor-pointer transition-transform duration-300 hover:scale-105">
-              <div className="relative w-full max-w-xs">
-                <img src="./images/cat.jpg" className="w-full h-64 sm:h-72 object-cover rounded-md shadow-lg" alt="Dress" />
-                <p className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-2xl sm:text-3xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
-                  Dress
-                </p>
-              </div>
-            </div>
-          </Link>
-
-          <Link to="/category/Makeup">
-            <div className="flex flex-col items-center cursor-pointer transition-transform duration-300 hover:scale-105">
-              <div className="relative w-full max-w-xs">
-                <img src="./images/cat (2).jpg" className="w-full h-64 sm:h-72 object-cover rounded-md shadow-lg" alt="Makeup" />
-                <p className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-2xl sm:text-3xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
-                  Makeup
-                </p>
-              </div>
-            </div>
-          </Link>
-
-          <Link to="/category/Photography">
-            <div className="flex flex-col items-center cursor-pointer transition-transform duration-300 hover:scale-105">
-              <div className="relative w-full max-w-xs">
-                <img src="./images/cat (4).jpg" className="w-full h-64 sm:h-72 object-cover rounded-md shadow-lg" alt="Photography" />
-                <p className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-2xl sm:text-3xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
-                  Photography
-                </p>
-              </div>
-            </div>
-          </Link>
-
-          <Link to="/category/Decoration">
-            <div className="flex flex-col items-center cursor-pointer transition-transform duration-300 hover:scale-105">
-              <div className="relative w-full max-w-xs">
-                <img src="./images/shop (1).jpg" className="w-full h-64 sm:h-72 object-cover rounded-md shadow-lg" alt="Decoration" />
-                <p className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-2xl sm:text-3xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
-                  Decoration
-                </p>
-              </div>
-            </div>
-          </Link>
-
-          <Link to="/category/Catering">
-            <div className="flex flex-col items-center cursor-pointer transition-transform duration-300 hover:scale-105">
-              <div className="relative w-full max-w-xs">
-                <img src="./images/wed1 (2).jpg" className="w-full h-64 sm:h-72 object-cover rounded-md shadow-lg" alt="Catering" />
-                <p className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-2xl sm:text-3xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
-                  Catering
-                </p>
-              </div>
-            </div>
-          </Link>
-
-          <Link to="/category/Invitation">
-            <div className="flex flex-col items-center cursor-pointer transition-transform duration-300 hover:scale-105">
-              <div className="relative w-full max-w-xs">
-                <img src="./images/cat (7).jpg" className="w-full h-64 sm:h-72 object-cover rounded-md shadow-lg" alt="Invitation" />
-                <p className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-2xl sm:text-3xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
-                  Invitation
-                </p>
-              </div>
-            </div>
-          </Link>
-
-          <Link to="/category/Mehndi">
-            <div className="flex flex-col items-center cursor-pointer transition-transform duration-300 hover:scale-105">
-              <div className="relative w-full max-w-xs">
-                <img src="./images/cat (6).jpg" className="w-full h-64 sm:h-72 object-cover rounded-md shadow-lg" alt="Mehndi" />
-                <p className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-2xl sm:text-3xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
-                  Mehndi
-                </p>
-              </div>
-            </div>
-          </Link>
-
+    <Link to="/category/Dress">
+      <div className="flex flex-col items-center hover:scale-105 transition">
+        <div className="relative w-full max-w-xs">
+          <img src="./images/cat.jpg" className="w-full h-64 object-cover rounded-md shadow-lg" alt="Dress" />
+          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-2xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
+            Dress
+          </p>
         </div>
-      </section>
+      </div>
+    </Link>
 
+
+    <Link to="/category/Makeup">
+      <div className="flex flex-col items-center hover:scale-105 transition">
+        <div className="relative w-full max-w-xs">
+          <img src="./images/cat (2).jpg" className="w-full h-64 object-cover rounded-md shadow-lg" alt="Makeup" />
+          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-2xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
+            Makeup
+          </p>
+        </div>
+      </div>
+    </Link>
+
+
+    <Link to="/category/Photography">
+      <div className="flex flex-col items-center hover:scale-105 transition">
+        <div className="relative w-full max-w-xs">
+          <img src="./images/cat (4).jpg" className="w-full h-64 object-cover rounded-md shadow-lg" alt="Photography" />
+          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-2xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
+            Photography
+          </p>
+        </div>
+      </div>
+    </Link>
+
+    <Link to="/category/Decoration">
+      <div className="flex flex-col items-center hover:scale-105 transition">
+        <div className="relative w-full max-w-xs">
+          <img src="./images/shop (1).jpg" className="w-full h-64 object-cover rounded-md shadow-lg" alt="Decoration" />
+          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-2xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
+            Decoration
+          </p>
+        </div>
+      </div>
+    </Link>
+
+
+    <Link to="/category/catering">
+      <div className="flex flex-col items-center hover:scale-105 transition">
+        <div className="relative w-full max-w-xs">
+          <img src="./images/wed1 (2).jpg" className="w-full h-64 object-cover rounded-md shadow-lg" alt="Catering" />
+          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-2xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
+            Catering
+          </p>
+        </div>
+      </div>
+    </Link>
+
+
+    <Link to="/category/Invitation">
+      <div className="flex flex-col items-center hover:scale-105 transition">
+        <div className="relative w-full max-w-xs">
+          <img src="./images/cat (7).jpg" className="w-full h-64 object-cover rounded-md shadow-lg" alt="Invitation" />
+          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-2xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
+            Invitation
+          </p>
+        </div>
+      </div>
+    </Link>
+
+
+    <Link to="/category/Mehndi">
+      <div className="flex flex-col items-center hover:scale-105 transition">
+        <div className="relative w-full max-w-xs">
+          <img src="./images/cat (6).jpg" className="w-full h-64 object-cover rounded-md shadow-lg" alt="Mehndi" />
+          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-2xl font-semibold courgette-text text-pink-900 bg-white/70 px-2 py-1 rounded">
+            Mehndi
+          </p>
+        </div>
+      </div>
+    </Link>
+
+  </div>
+</section>
 
 
 
@@ -321,9 +335,11 @@ absolute top-36 left-11 z-10
           <p className="text-xl lg:text-5xl font-semibold courgette-text text-white text-center">
             Let Us Make Your Wedding Flawless
           </p>
+          <Link to='/cont'>
           <button className="w-48 h-10 lg:w-60 lg:h-20 lg:text-xl font-semibold bg-pink-800 hover:bg-white text-white hover:text-pink-800 rounded-md">
             SEND REQUEST
           </button>
+          </Link>
         </div>
       </section>
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaStar, FaMapMarkerAlt, FaRupeeSign } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 
@@ -9,208 +9,178 @@ const VendorsList = () => {
     navigate("/bookingsystem", { state: item });
   };
 
+  const vendors = [
+    {
+      name: "Bass Beats DJ",
+      city: "Chennai",
+      category: "DJ",
+      price: 15000,
+      availability: "Available",
+      image: "https://images.pexels.com/photos/167491/pexels-photo-167491.jpeg",
+      rating: 4.7,
+    },
+    {
+      name: "Royal Catering",
+      city: "Coimbatore",
+      category: "Catering",
+      price: 28000,
+      availability: "Unavailable",
+      image: "https://images.pexels.com/photos/2284166/pexels-photo-2284166.jpeg",
+      rating: 4.3,
+    },
+    {
+      name: "Glam Bride Studio",
+      city: "Bangalore",
+      category: "Makeup",
+      price: 18000,
+      availability: "Available",
+      image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg",
+      rating: 4.8,
+    },
+    {
+      name: "Candid Clicks",
+      city: "Chennai",
+      category: "Photography",
+      price: 35000,
+      availability: "Available",
+      image: "https://images.pexels.com/photos/256381/pexels-photo-256381.jpeg",
+      rating: 4.9,
+    },
+    {
+      name: "Henna Magic",
+      city: "Chennai",
+      category: "Mehndi",
+      price: 6000,
+      availability: "Available",
+      image: "https://images.pexels.com/photos/2406248/pexels-photo-2406248.jpeg",
+      rating: 4.5,
+    },
+    {
+      name: "Rose Garden Hall",
+      city: "Bangalore",
+      category: "Venue",
+      price: 50000,
+      availability: "Available",
+      image: "https://images.pexels.com/photos/169190/pexels-photo-169190.jpeg",
+      rating: 4.6,
+    },
+    {
+      name: "Shaadi Experts",
+      city: "Coimbatore",
+      category: "Wedding Planner",
+      price: 40000,
+      availability: "Available",
+      image: "https://images.pexels.com/photos/2567376/pexels-photo-2567376.jpeg",
+      rating: 5.0,
+    },
+    {
+      name: "Elegant Events",
+      city: "Chennai",
+      category: "Wedding Planner",
+      price: 38000,
+      availability: "Available",
+      image: "https://images.pexels.com/photos/265947/pexels-photo-265947.jpeg",
+      rating: 4.6,
+    },
+    {
+      name: "The Mehndi Art",
+      city: "Bangalore",
+      category: "Mehndi",
+      price: 7500,
+      availability: "Available",
+      image: "https://images.pexels.com/photos/14050784/pexels-photo-14050784.jpeg",
+      rating: 4.4,
+    },
+    {
+      name: "Regal Banquet Hall",
+      city: "Coimbatore",
+      category: "Venue",
+      price: 45000,
+      availability: "Available",
+      image: "https://images.pexels.com/photos/1250283/pexels-photo-1250283.jpeg",
+      rating: 4.9,
+    },
+  ];
+
+  const [filters, setFilters] = useState({
+    city: "All Cities",
+    category: "All Categories",
+    price: "Any Price",
+    availability: "Availability",
+  });
+
+  const filteredVendors = vendors.filter((vendor) => {
+    return (
+      (filters.city === "All Cities" || vendor.city === filters.city) &&
+      (filters.category === "All Categories" || vendor.category === filters.category) &&
+      (filters.availability === "Availability" || vendor.availability === filters.availability) &&
+      (filters.price === "Any Price" ||
+        (filters.price === "Under ₹20,000" && vendor.price <= 20000) ||
+        (filters.price === "Under ₹30,000" && vendor.price <= 30000))
+    );
+  });
+
   return (
     <div className="min-h-screen bg-[#fdfaf6] p-8 md:p-16">
       <h1 className="text-4xl font-bold text-center text-pink-900 mb-10">
         Explore Verified Wedding Vendors
       </h1>
 
+      {/* Filters */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-        <select className="border border-gray-300 rounded-md p-2">
+        <select className="border p-2" value={filters.city} onChange={(e) => setFilters({ ...filters, city: e.target.value })}>
           <option>All Cities</option>
           <option>Chennai</option>
           <option>Coimbatore</option>
           <option>Bangalore</option>
         </select>
-        <select className="border border-gray-300 rounded-md p-2">
+
+        <select className="border p-2" value={filters.category} onChange={(e) => setFilters({ ...filters, category: e.target.value })}>
           <option>All Categories</option>
           <option>DJ</option>
           <option>Catering</option>
           <option>Makeup</option>
           <option>Photography</option>
           <option>Mehndi</option>
+          <option>Venue</option>
+          <option>Wedding Planner</option>
         </select>
-        <select className="border border-gray-300 rounded-md p-2">
+
+        <select className="border p-2" value={filters.price} onChange={(e) => setFilters({ ...filters, price: e.target.value })}>
           <option>Any Price</option>
           <option>Under ₹20,000</option>
           <option>Under ₹30,000</option>
         </select>
-        <select className="border border-gray-300 rounded-md p-2">
+
+        <select className="border p-2" value={filters.availability} onChange={(e) => setFilters({ ...filters, availability: e.target.value })}>
           <option>Availability</option>
           <option>Available</option>
           <option>Unavailable</option>
         </select>
       </div>
 
-    
+      {/* Vendor Cards */}
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-    
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <img src="https://images.pexels.com/photos/167491/pexels-photo-167491.jpeg" alt="Bass Beats DJ" className="w-full h-48 object-cover" />
-          <div className="p-4 space-y-1">
-            <h2 className="text-xl font-bold text-[#6b4226]">Bass Beats DJ</h2>
-            <p className="text-sm text-gray-500">DJ</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaMapMarkerAlt /> Chennai</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaStar className="text-yellow-400" /> 4.7 rating</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaRupeeSign /> 15,000</p>
-            <p className="text-sm font-semibold text-green-600">Available</p>
-            <button onClick={() => handleBook({ name: "Bass Beats DJ", price: "₹15,000" })} className="mt-2 bg-pink-900 text-white px-4 py-2 rounded hover:bg-pink-800">Book Now</button>
+        {filteredVendors.map((vendor, index) => (
+          <div key={index} className="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img src={vendor.image} alt={vendor.name} className="w-full h-48 object-cover" />
+            <div className="p-4 space-y-1">
+              <h2 className="text-xl font-bold text-[#6b4226]">{vendor.name}</h2>
+              <p className="text-sm text-gray-500">{vendor.category}</p>
+              <p className="flex items-center text-gray-600 gap-1"><FaMapMarkerAlt /> {vendor.city}</p>
+              <p className="flex items-center text-gray-600 gap-1"><FaStar className="text-yellow-400" /> {vendor.rating} rating</p>
+              <p className="flex items-center text-gray-600 gap-1"><FaRupeeSign /> {vendor.price.toLocaleString()}</p>
+              <p className={`text-sm font-semibold ${vendor.availability === "Available" ? "text-green-600" : "text-red-500"}`}>{vendor.availability}</p>
+              <button
+                onClick={() => handleBook({ name: vendor.name, price: `₹${vendor.price.toLocaleString()}` })}
+                className={`mt-2 px-4 py-2 rounded text-white ${vendor.availability === "Available" ? "bg-pink-900 hover:bg-pink-800" : "bg-gray-400 cursor-not-allowed"}`}
+                disabled={vendor.availability !== "Available"}
+              >
+                Book Now
+              </button>
+            </div>
           </div>
-        </div>
-
-       
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <img src="https://images.pexels.com/photos/2284166/pexels-photo-2284166.jpeg" alt="Royal Catering" className="w-full h-48 object-cover" />
-          <div className="p-4 space-y-1">
-            <h2 className="text-xl font-bold text-[#6b4226]">Royal Catering</h2>
-            <p className="text-sm text-gray-500">Catering</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaMapMarkerAlt /> Coimbatore</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaStar className="text-yellow-400" /> 4.3 rating</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaRupeeSign /> 28,000</p>
-            <p className="text-sm font-semibold text-red-500">Unavailable</p>
-            <button className="mt-2 bg-pink-900 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed" disabled>Book Now</button>
-          </div>
-        </div>
-
-
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg" alt="Glam Bride Studio" className="w-full h-48 object-cover" />
-          <div className="p-4 space-y-1">
-            <h2 className="text-xl font-bold text-[#6b4226]">Glam Bride Studio</h2>
-            <p className="text-sm text-gray-500">Makeup Artist</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaMapMarkerAlt /> Bangalore</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaStar className="text-yellow-400" /> 4.8 rating</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaRupeeSign /> 18,000</p>
-            <p className="text-sm font-semibold text-green-600">Available</p>
-            <button onClick={() => handleBook({ name: "Glam Bride Studio", price: "₹18,000" })} className="mt-2 bg-pink-900 text-white px-4 py-2 rounded hover:bg-pink-800">Book Now</button>
-          </div>
-        </div>
-
-
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <img src="https://images.pexels.com/photos/256381/pexels-photo-256381.jpeg" alt="Candid Clicks" className="w-full h-48 object-cover" />
-          <div className="p-4 space-y-1">
-            <h2 className="text-xl font-bold text-[#6b4226]">Candid Clicks</h2>
-            <p className="text-sm text-gray-500">Photographer</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaMapMarkerAlt /> Chennai</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaStar className="text-yellow-400" /> 4.9 rating</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaRupeeSign /> 35,000</p>
-            <p className="text-sm font-semibold text-green-600">Available</p>
-            <button onClick={() => handleBook({ name: "Candid Clicks", price: "₹35,000" })} className="mt-2 bg-pink-900 text-white px-4 py-2 rounded hover:bg-pink-800">Book Now</button>
-          </div>
-        </div>
-
-
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <img src="https://images.pexels.com/photos/2406248/pexels-photo-2406248.jpeg" alt="Henna Magic" className="w-full h-48 object-cover" />
-          <div className="p-4 space-y-1">
-            <h2 className="text-xl font-bold text-[#6b4226]">Henna Magic</h2>
-            <p className="text-sm text-gray-500">Mehndi Artist</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaMapMarkerAlt /> Chennai</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaStar className="text-yellow-400" /> 4.5 rating</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaRupeeSign /> 6,000</p>
-            <p className="text-sm font-semibold text-green-600">Available</p>
-            <button onClick={() => handleBook({ name: "Henna Magic", price: "₹6,000" })} className="mt-2 bg-pink-900 text-white px-4 py-2 rounded hover:bg-pink-800">Book Now</button>
-          </div>
-        </div>
-
-
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <img src="https://images.pexels.com/photos/169190/pexels-photo-169190.jpeg" alt="Rose Garden Hall" className="w-full h-48 object-cover" />
-          <div className="p-4 space-y-1">
-            <h2 className="text-xl font-bold text-[#6b4226]">Rose Garden Hall</h2>
-            <p className="text-sm text-gray-500">Wedding Venue</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaMapMarkerAlt /> Bangalore</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaStar className="text-yellow-400" /> 4.6 rating</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaRupeeSign /> 50,000</p>
-            <p className="text-sm font-semibold text-green-600">Available</p>
-            <button onClick={() => handleBook({ name: "Rose Garden Hall", price: "₹50,000" })} className="mt-2 bg-pink-900 text-white px-4 py-2 rounded hover:bg-pink-800">Book Now</button>
-          </div>
-        </div>
-
-
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <img src="https://images.pexels.com/photos/2567376/pexels-photo-2567376.jpeg" alt="Shaadi Experts" className="w-full h-48 object-cover" />
-          <div className="p-4 space-y-1">
-            <h2 className="text-xl font-bold text-[#6b4226]">Shaadi Experts</h2>
-            <p className="text-sm text-gray-500">Wedding Planner</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaMapMarkerAlt /> Coimbatore</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaStar className="text-yellow-400" /> 5.0 rating</p>
-            <p className="flex items-center text-gray-600 gap-1"><FaRupeeSign /> 40,000</p>
-            <p className="text-sm font-semibold text-green-600">Available</p>
-            <button onClick={() => handleBook({ name: "Shaadi Experts", price: "₹40,000" })} className="mt-2 bg-pink-900 text-white px-4 py-2 rounded hover:bg-pink-800">Book Now</button>
-          </div>
-        </div>
-
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-  <img
-    src="https://images.pexels.com/photos/265947/pexels-photo-265947.jpeg"
-    alt="Elegant Events"
-    className="w-full h-48 object-cover"
-  />
-  <div className="p-4 space-y-1">
-    <h2 className="text-xl font-bold text-[#6b4226]">Elegant Events</h2>
-    <p className="text-sm text-gray-500">Wedding Planner</p>
-    <p className="flex items-center text-gray-600 gap-1"><FaMapMarkerAlt /> Chennai</p>
-    <p className="flex items-center text-gray-600 gap-1"><FaStar className="text-yellow-400" /> 4.6 rating</p>
-    <p className="flex items-center text-gray-600 gap-1"><FaRupeeSign /> 38,000</p>
-    <p className="text-sm font-semibold text-green-600">Available</p>
-    <button
-      onClick={() => handleBook({ name: "Elegant Events", price: "₹38,000" })}
-      className="mt-2 bg-pink-900 text-white px-4 py-2 rounded hover:bg-pink-800"
-    >
-      Book Now
-    </button>
-  </div>
-</div>
-
-<div className="bg-white shadow-lg rounded-lg overflow-hidden">
-  <img
-    src="https://images.pexels.com/photos/14050784/pexels-photo-14050784.jpeg"
-    alt="The Mehndi Art"
-    className="w-full h-48 object-cover"
-  />
-  <div className="p-4 space-y-1">
-    <h2 className="text-xl font-bold text-[#6b4226]">The Mehndi Art</h2>
-    <p className="text-sm text-gray-500">Mehndi Artist</p>
-    <p className="flex items-center text-gray-600 gap-1"><FaMapMarkerAlt /> Bangalore</p>
-    <p className="flex items-center text-gray-600 gap-1"><FaStar className="text-yellow-400" /> 4.4 rating</p>
-    <p className="flex items-center text-gray-600 gap-1"><FaRupeeSign /> 7,500</p>
-    <p className="text-sm font-semibold text-green-600">Available</p>
-    <button
-      onClick={() => handleBook({ name: "The Mehndi Art", price: "₹7,500" })}
-      className="mt-2 bg-pink-900 text-white px-4 py-2 rounded hover:bg-pink-800"
-    >
-      Book Now
-    </button>
-  </div>
-</div>
-
-
-<div className="bg-white shadow-lg rounded-lg overflow-hidden">
-  <img
-    src="https://images.pexels.com/photos/1250283/pexels-photo-1250283.jpeg"
-    alt="Regal Banquet Hall"
-    className="w-full h-48 object-cover"
-  />
-  <div className="p-4 space-y-1">
-    <h2 className="text-xl font-bold text-[#6b4226]">Regal Banquet Hall</h2>
-    <p className="text-sm text-gray-500">Wedding Venue</p>
-    <p className="flex items-center text-gray-600 gap-1"><FaMapMarkerAlt /> Coimbatore</p>
-    <p className="flex items-center text-gray-600 gap-1"><FaStar className="text-yellow-400" /> 4.9 rating</p>
-    <p className="flex items-center text-gray-600 gap-1"><FaRupeeSign /> 45,000</p>
-    <p className="text-sm font-semibold text-green-600">Available</p>
-    <button
-      onClick={() => handleBook({ name: "Regal Banquet Hall", price: "₹45,000" })}
-      className="mt-2 bg-pink-900 text-white px-4 py-2 rounded hover:bg-pink-800"
-    >
-      Book Now
-    </button>
-  </div>
-</div>
-
-
+        ))}
       </div>
     </div>
   );

@@ -16,6 +16,7 @@ import Navbar from './components/Navbar';
 import About from './pages/About';
 import BookingConfirmed from "./pages/BookingConfirmed";
 
+
 function AppRoutes({ cartCount, setCartCount }) {
   const location = useLocation();
   const hideNavbarPaths = ['/', '/signin','/bookingconfirmed'];
@@ -40,6 +41,8 @@ function AppRoutes({ cartCount, setCartCount }) {
         <Route path="/about" element={<About />} />
         <Route path="/shop" element={<Shop cartCount={cartCount} setCartCount={setCartCount} />} />
         <Route path="/bookingconfirmed" element={<BookingConfirmed />} />
+      
+
       </Routes>
     </>
   );

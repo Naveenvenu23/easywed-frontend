@@ -111,6 +111,7 @@ const Navbar = ({ cartCount }) => {
           <Link to="/shoppackages" onClick={() => setMenuOpen(false)}>Packages</Link>
           <Link to="/gallery" onClick={() => setMenuOpen(false)}>Gallery</Link>
           <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+          
           <button onClick={logout} className="text-white font-semibold w-full bg-pink-900 py-2 rounded">
             Logout
           </button>
