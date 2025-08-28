@@ -9,7 +9,7 @@ const Login = () => {
   const [logging, setLogging] = useState(false);
   const navigate = useNavigate();
 
-  // Redirect to home if already logged in
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(function (user) {
       if (user) {
