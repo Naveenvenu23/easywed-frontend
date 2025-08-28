@@ -9,7 +9,6 @@ const Login = () => {
   const [logging, setLogging] = useState(false);
   const navigate = useNavigate();
 
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(function (user) {
       if (user) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import { auth, provider } from '../config';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,7 +11,8 @@ const Signin = () => {
 
   const navigate = useNavigate();
 
-  const signupUser = (e) => {
+  // Email/Password Signup
+  const signupUser = async (e) => {
     e.preventDefault();
 
     if (!user || !pass) {
@@ -21,21 +22,25 @@ const Signin = () => {
 
     setSigning(true);
 
-    createUserWithEmailAndPassword(auth, user, pass)
-      .then((result) => {
-        console.log("User signed up:", result.user);
-        alert("Signed up successfully! Please log in.");
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error("Signup error:", error.message);
-        alert("Something went wrong, please try again later.");
-      })
-      .finally(() => {
-        setSigning(false);
-      });
+    try {
+      const result = await createUserWithEmailAndPassword(auth, user, pass);
+      console.log("User signed up:", result.user);
+
+      alert("Signed up successfully! Please log in.");
+
+      // Sign out immediately so they can log in manually
+      await signOut(auth);
+
+      navigate("/"); // redirect to login page
+    } catch (error) {
+      console.error("Signup error:", error.message);
+      alert(error.message || "Something went wrong, please try again later.");
+    } finally {
+      setSigning(false);
+    }
   };
 
+  // Google Signup/Login
   const handleClick = () => {
     signInWithPopup(auth, provider)
       .then((data) => {
@@ -56,7 +61,6 @@ const Signin = () => {
       setValue(storedEmail);
     }
   }, []);
-
   return (
     <>
 
